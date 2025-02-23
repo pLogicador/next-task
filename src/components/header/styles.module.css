@@ -1,0 +1,110 @@
+.header {
+  width: 100%;
+  height: 4.5rem;
+  background: #1c1973;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0px 2px 20px black;
+}
+
+.content {
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content a {
+  text-decoration: none;
+}
+
+.logo {
+  color: white;
+  font-size: 2.3rem;
+}
+
+.logo span {
+  color: #5b44f2;
+  padding-left: 0.2rem;
+}
+
+.loginButton {
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  box-shadow: 2px 1px 10px #04d960;
+  color: white;
+  border-radius: 2rem;
+  padding: 0.5rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s;
+  transform: 0.4s;
+}
+
+.loginButton:hover {
+  transform: scale(1.08);
+  color: black;
+  background: white;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  background: white;
+  color: #000;
+  padding: 0.5rem 1.1rem;
+  border-radius: 0.4rem;
+  margin: 0 1rem;
+  box-shadow: 2px 1px 10px white;
+}
+
+.link:hover {
+  background: #5b44f2;
+  color: white;
+  box-shadow: 2px 1px 10px #5b44f2;
+}
+
+/* for devices */
+@media (min-width: 768px) and (orientation: landscape) {
+  .header {
+    height: 4rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .loginButton {
+    font-size: 1rem;
+  }
+
+  .link {
+    padding: 0.3rem 1.1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 590px) {
+  .logo {
+    font-size: 1.7rem;
+  }
+
+  .loginButton {
+    font-size: 0.9rem;
+  }
+
+  .link {
+    padding: 0.5rem 1.1rem;
+    font-size: 0.6rem;
+  }
+}

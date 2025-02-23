@@ -18,9 +18,18 @@ export default function Home() {
         </div>
 
         <h1 className={styles.title}>
-          Seu tempo, suas regras. Organize sua rotina e conquiste seus objetivos
-          sem estresse.'
+          Your time, your rules. Organize your routine and achieve your goals
+          without stress.
         </h1>
+
+        <div className={styles.infoContent}>
+          <section className={styles.box}>
+            <span>+12 posts</span>
+          </section>
+          <section className={styles.box}>
+            <span>+90 comments</span>
+          </section>
+        </div>
       </main>
     </div>
   );
