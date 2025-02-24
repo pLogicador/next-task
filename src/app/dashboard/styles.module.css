@@ -1,0 +1,150 @@
+.container {
+  width: 100%;
+}
+
+.content {
+  background: #100e40;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentForm {
+  padding: 0 1rem;
+  max-width: 1024px;
+  width: 100%;
+  margin: 3rem 0 1.5rem 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  margin: 0 0 1.5rem 0;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.397);
+  padding: 1rem 0;
+}
+
+.checkboxArea label {
+  margin-left: 1rem;
+  color: rgb(255, 255, 255);
+}
+
+.checkboxArea {
+  margin: 1.7rem 0;
+}
+
+.checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.button {
+  border: none;
+  width: 100%;
+  padding: 1rem 4rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  box-shadow: 0 2px 10px black;
+  background: #5b44f2;
+  transition: all 0.3s;
+}
+
+.button:hover {
+  cursor: pointer;
+  background: #04d960;
+}
+
+.taskContainer {
+  margin: 0 auto 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskContainer h1 {
+  font-size: 2rem;
+  margin: 1rem 0;
+  text-align: center;
+  color: white;
+}
+
+.taskContainer label {
+  text-decoration: none;
+  color: #100e40;
+}
+
+.task {
+  margin-bottom: 1rem;
+  line-height: 150%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid black;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  transition: all 1s;
+}
+
+.task:hover {
+  border: 1.5px solid white;
+  box-shadow: 0 2px 10px black;
+}
+
+.tagContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
+
+.tag {
+  background: #5b44f2;
+  padding: 0.15rem 0.5rem;
+  color: white;
+  border-radius: 0.3rem;
+  font-size: 12px;
+}
+
+.tag:hover {
+  background: #100e40;
+  color: white;
+  cursor: pointer;
+}
+
+.shareButton {
+  background: transparent;
+  border: none;
+  margin: 0 0.8rem;
+  cursor: pointer;
+}
+
+.taskContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: #a09f9f;
+  transition: all 1s;
+}
+
+.taskContent:hover {
+  color: #d8d7d7;
+}
+
+.taskContent p {
+  white-space: pre-wrap;
+}
+
+.trashButton {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  margin: 0 0.5rem;
+}
