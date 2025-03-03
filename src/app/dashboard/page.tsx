@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import styles from "./styles.module.css";
@@ -9,9 +9,43 @@ import { Textarea } from "@/components/textarea";
 import { FiShare2 } from "react-icons/fi";
 import { FaTrash } from "react-icons/fa";
 
-export default function Dashboard() {
+import { db } from "../../services/firebaseConnection";
+import { addDoc, collection } from "firebase/firestore";
+
+interface HomeProps {
+  user: {
+    email: string;
+  };
+}
+
+export default function Dashboard({ user }: HomeProps) {
+  const [input, setInput] = useState("");
+  const [publicTask, setPublicTask] = useState(false);
   const [session, setSession] = useState<any>(null);
   const router = useRouter();
+
+  function handleChangePublic(event: ChangeEvent<HTMLInputElement>) {
+    setPublicTask(event.target.checked);
+  }
+
+  async function handleRegisterTask(event: FormEvent) {
+    event.preventDefault();
+
+    if (input === "" || !session?.user?.email) return;
+    try {
+      await addDoc(collection(db, "tasks"), {
+        task: input,
+        created: new Date(),
+        user: session.user.email,
+        public: publicTask,
+      });
+
+      setInput("");
+      setPublicTask(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -42,10 +76,21 @@ export default function Dashboard() {
           <div className={styles.contentForm}>
             <h1 className={styles.title}>Welcome to your Dashboard</h1>
 
-            <form action="">
-              <Textarea placeholder="Type your task here..." />
+            <form onSubmit={handleRegisterTask}>
+              <Textarea
+                placeholder="Type your task here..."
+                value={input}
+                onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                  setInput(event.target.value)
+                }
+              />
               <div className={styles.checkboxArea}>
-                <input type="checkbox" className={styles.checkbox} />
+                <input
+                  type="checkbox"
+                  className={styles.checkbox}
+                  checked={publicTask}
+                  onChange={handleChangePublic}
+                />
                 <label>Make it public</label>
               </div>
 
