@@ -57,6 +57,7 @@
 .button:hover {
   cursor: pointer;
   background: #04d960;
+  color: white;
 }
 
 .taskContainer {
