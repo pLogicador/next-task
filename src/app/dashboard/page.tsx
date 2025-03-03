@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import styles from "./styles.module.css";
 import Head from "next/head";
 import { Textarea } from "@/components/textarea";
-import { FiShare2 } from "react-icons/fi";
-import { FaTrash } from "react-icons/fa";
 
 import { db } from "../../services/firebaseConnection";
 import {
@@ -21,6 +19,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import Link from "next/link";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdContentCopy } from "react-icons/md";
 
 interface HomeProps {
   user: {
@@ -176,7 +176,7 @@ export default function Dashboard({ user }: HomeProps) {
                     className={styles.shareButton}
                     onClick={() => handleShare(item.id)}
                   >
-                    <FiShare2 size={22} color="#04d960" />
+                    <MdContentCopy size={22} color="#04d960" />
                   </button>
                 </div>
               )}
@@ -194,7 +194,7 @@ export default function Dashboard({ user }: HomeProps) {
                   className={styles.trashButton}
                   onClick={() => handleDeleteTask(item.id)}
                 >
-                  <FaTrash size={24} color="red" />
+                  <RiDeleteBinLine size={24} color="red" />
                 </button>
               </div>
             </article>
