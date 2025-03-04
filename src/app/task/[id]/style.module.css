@@ -93,3 +93,34 @@
   color: transparent;
   background: #1d1d1dbd;
 }
+
+.comment {
+  border: 1px solid #414040;
+  border-radius: 0.4rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.headComment {
+  display: flex;
+  align-items: center;
+}
+
+.commentsLabel {
+  background: #d9d9d9;
+  padding: 0.2rem 0.5rem;
+  margin-right: 0.8rem;
+  border-radius: 0.4rem;
+}
+
+.buttonTrash {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.comment p {
+  margin-top: 1rem;
+  white-space: pre-wrap;
+  color: #8c8c8c;
+}

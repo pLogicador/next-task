@@ -16,6 +16,7 @@ import {
 import styles from "./style.module.css";
 import { Textarea } from "@/components/textarea/index";
 import { useSession } from "next-auth/react";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 interface CommentProps {
   id: string;
@@ -50,6 +51,15 @@ export default function TaskDetail() {
         taskId: item?.taskId,
       });
 
+      const data = {
+        id: docRef.id,
+        comment: input,
+        user: session?.user?.email,
+        name: session?.user?.name,
+        taskId: item?.taskId,
+      };
+
+      setComments((oldItems) => [...oldItems, data]);
       setInput("");
       loadComments();
     } catch (err) {
@@ -159,6 +169,15 @@ export default function TaskDetail() {
 
         {comments.map((item) => (
           <article key={item.id} className={styles.comment}>
+            <div className={styles.headComment}>
+              <label className={styles.commentsLabel}>{item.name}</label>
+
+              {item.user === session?.user?.email && (
+                <button className={styles.buttonTrash}>
+                  <RiDeleteBinLine size={24} color="red" />
+                </button>
+              )}
+            </div>
             <p>{item.comment}</p>
           </article>
         ))}
