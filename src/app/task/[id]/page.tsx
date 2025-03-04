@@ -4,13 +4,30 @@ import Head from "next/head";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { db } from "@/services/firebaseConnection";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import styles from "./style.module.css";
 import { Textarea } from "@/components/textarea/index";
 import { useSession } from "next-auth/react";
 
+interface CommentProps {
+  id: string;
+  comment: string;
+  taskId: string;
+  user: string;
+  name: string;
+}
+
 export default function TaskDetail() {
   const [item, setItem] = useState<any>(null);
+  const [comments, setComments] = useState<CommentProps[]>([]);
   const router = useRouter();
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -34,14 +51,37 @@ export default function TaskDetail() {
       });
 
       setInput("");
+      loadComments();
     } catch (err) {
       console.log(err);
     }
   }
 
+  async function loadComments() {
+    if (!id) return;
+
+    const q = query(collection(db, "comments"), where("taskId", "==", id));
+    const snapshotComments = await getDocs(q);
+
+    let allComments: CommentProps[] = [];
+    snapshotComments.forEach((doc) => {
+      allComments.push({
+        id: doc.id,
+        comment: doc.data().comment,
+        user: doc.data().user,
+        name: doc.data().name,
+        taskId: doc.data().taskId,
+      });
+    });
+
+    setComments(allComments);
+  }
+
   useEffect(() => {
     async function loadTask() {
       if (!id) return;
+
+      await loadComments();
 
       const docRef = doc(db, "tasks", id);
       const snapshot = await getDoc(docRef);
@@ -110,6 +150,18 @@ export default function TaskDetail() {
             Send comment
           </button>
         </form>
+      </section>
+
+      <section className={styles.commentsContainer}>
+        <h2>All comments</h2>
+
+        {comments.length === 0 && <span>No comments yet...</span>}
+
+        {comments.map((item) => (
+          <article key={item.id} className={styles.comment}>
+            <p>{item.comment}</p>
+          </article>
+        ))}
       </section>
     </div>
   );
