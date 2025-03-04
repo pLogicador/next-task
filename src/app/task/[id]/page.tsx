@@ -1,18 +1,43 @@
 "use client";
 
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { db } from "@/services/firebaseConnection";
-import { doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import styles from "./style.module.css";
 import { Textarea } from "@/components/textarea/index";
+import { useSession } from "next-auth/react";
 
 export default function TaskDetail() {
   const [item, setItem] = useState<any>(null);
   const router = useRouter();
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
+
+  const { data: session } = useSession();
+  const [input, setInput] = useState("");
+
+  async function handleComment(event: FormEvent) {
+    event.preventDefault();
+
+    if (input === "") return;
+    if (!session?.user?.email || !session?.user?.name) return;
+
+    try {
+      const docRef = await addDoc(collection(db, "comments"), {
+        comment: input,
+        created: new Date(),
+        user: session?.user?.email,
+        name: session?.user?.name,
+        taskId: item?.taskId,
+      });
+
+      setInput("");
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     async function loadTask() {
@@ -52,7 +77,7 @@ export default function TaskDetail() {
       </Head>
 
       <main className={styles.main}>
-        <h1> {item.user}</h1>
+        <h1> {session?.user?.name}</h1>
         <article className={styles.task}>
           <p>
             <strong>Task</strong> {item.task}
@@ -73,9 +98,17 @@ export default function TaskDetail() {
       <section className={styles.commentsContainer}>
         <h2>Leave your comment below</h2>
 
-        <form>
-          <Textarea placeholder="Type your comment..." />
-          <button className={styles.button}>Send comment</button>
+        <form onSubmit={handleComment}>
+          <Textarea
+            placeholder="Type your comment..."
+            value={input}
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+              setInput(event.target.value)
+            }
+          />
+          <button disabled={!session?.user} className={styles.button}>
+            Send comment
+          </button>
         </form>
       </section>
     </div>
