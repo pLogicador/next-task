@@ -7,6 +7,7 @@ import { db } from "@/services/firebaseConnection";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -85,6 +86,20 @@ export default function TaskDetail() {
     });
 
     setComments(allComments);
+  }
+
+  async function handleDeleteComment(id: string) {
+    try {
+      const docRef = doc(db, "comments", id);
+      await deleteDoc(docRef);
+
+      const deleteComment = comments.filter((item) => item.id !== id);
+
+      alert("Comment successfully removed!");
+      setComments(deleteComment);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
@@ -173,7 +188,10 @@ export default function TaskDetail() {
               <label className={styles.commentsLabel}>{item.name}</label>
 
               {item.user === session?.user?.email && (
-                <button className={styles.buttonTrash}>
+                <button
+                  className={styles.buttonTrash}
+                  onClick={() => handleDeleteComment(item.id)}
+                >
                   <RiDeleteBinLine size={24} color="red" />
                 </button>
               )}
