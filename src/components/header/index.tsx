@@ -12,7 +12,7 @@ export function Header() {
         <nav className={styles.nav}>
           <Link href="/">
             <h1 className={styles.logo}>
-              Tasks<span>+</span>
+              <span>&lt;</span>p<span>/</span>log<span>&gt;</span>
             </h1>
           </Link>
           {session?.user && (
